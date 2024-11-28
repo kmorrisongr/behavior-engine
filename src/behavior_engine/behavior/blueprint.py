@@ -1,49 +1,11 @@
 from dataclasses import dataclass
 from typing import Callable, Protocol
-from uuid import UUID
 
+from behavior_engine.behavior.interaction import Interaction, SelfInteraction
+from behavior_engine.behavior.movement import MovementFunction
 from behavior_engine.model.actor import Actor
 from behavior_engine.model.entity import Entity
-from behavior_engine.simulation.state import WorldState
 from behavior_engine.types import SupportsRichComparison
-
-
-class Interaction(Protocol):
-    def __call__(
-        self,
-        actor_name: UUID,
-        entity_name: UUID,
-        state: WorldState,
-    ) -> None:
-        raise NotImplementedError
-
-
-class SelfInteraction(Protocol):
-    def __call__(
-        self,
-        actor_name: UUID,
-        state: WorldState,
-    ) -> None:
-        raise NotImplementedError
-
-
-class MovementFunction(Protocol):
-    def __call__(
-        self,
-        actor_name: UUID,
-        nearby_perceived_entities: list[Entity],
-        state: WorldState,
-    ) -> None: ...
-
-
-def noop(*args: Entity, **kwargs: Entity) -> None:
-    pass
-
-
-@dataclass
-class NearestPredicates[T: Entity]:
-    filter_pred: Callable[[T], Callable[[T], bool] | None] = noop
-    sorted_pred: Callable[[T], Callable[[T], SupportsRichComparison] | None] = noop
 
 
 class ChoreInteractions(dict[type[Entity], list[Interaction]]):
@@ -68,6 +30,16 @@ class ActionInteractions(dict[type[Entity], list[Interaction]]):
 
     These interactions are run when a given entity type is within physical contact range.
     """
+
+
+def noop(*args: Entity, **kwargs: Entity) -> None:
+    pass
+
+
+@dataclass
+class NearestPredicates[T: Entity]:
+    filter_pred: Callable[[T], Callable[[T], bool] | None] = noop
+    sorted_pred: Callable[[T], Callable[[T], SupportsRichComparison] | None] = noop
 
 
 class MovementPredicates[T: Actor](dict[type[Entity], NearestPredicates[T]]):
