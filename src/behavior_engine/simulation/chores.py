@@ -1,14 +1,17 @@
 from uuid import UUID
 
-from behavior_engine.behavior.interaction import Interaction, SelfInteraction
+from behavior_engine.behavior.blueprint import ChoreInteractions, ChoreInteractionsNot
+from behavior_engine.model.actor import Actor
 from behavior_engine.model.entity import Entity
 from behavior_engine.simulation.state import WorldState
 
 
-def perform_chores(
+def perform_chores[
+    T: Actor
+](
     actor_name: UUID,
-    behaviors: dict[type[Entity], list[Interaction]],
-    behaviors_not: dict[type[Entity], list[SelfInteraction]],
+    behaviors: ChoreInteractions[T],
+    behaviors_not: ChoreInteractionsNot[T],
     nearby_entities: list[Entity],
     state: WorldState,
 ) -> None:

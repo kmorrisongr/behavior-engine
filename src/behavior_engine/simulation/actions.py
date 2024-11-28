@@ -1,13 +1,16 @@
 from uuid import UUID
 
-from behavior_engine.behavior.interaction import Interaction
+from behavior_engine.behavior.blueprint import ActionInteractions
+from behavior_engine.model.actor import Actor
 from behavior_engine.model.entity import Entity
 from behavior_engine.simulation.state import WorldState
 
 
-def perform_actions(
+def perform_actions[
+    T: Actor
+](
     actor_name: UUID,
-    behaviors: dict[type[Entity], list[Interaction]],
+    behaviors: ActionInteractions[T],
     nearby_entities: list[Entity],
     state: WorldState,
 ) -> None:

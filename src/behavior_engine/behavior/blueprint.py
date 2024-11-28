@@ -8,7 +8,7 @@ from behavior_engine.model.entity import Entity
 from behavior_engine.types import SupportsRichComparison
 
 
-class ChoreInteractions(dict[type[Entity], list[Interaction]]):
+class ChoreInteractions[T: Actor](dict[type[Entity], list[Interaction[T]]]):
     """
     A collection of interactions that occur during the chore phase.
 
@@ -16,7 +16,7 @@ class ChoreInteractions(dict[type[Entity], list[Interaction]]):
     """
 
 
-class ChoreInteractionsNot(dict[type[Entity], list[SelfInteraction]]):
+class ChoreInteractionsNot[T: Actor](dict[type[Entity], list[SelfInteraction[T]]]):
     """
     A collection of interactions that occur during the chore phase.
 
@@ -24,7 +24,7 @@ class ChoreInteractionsNot(dict[type[Entity], list[SelfInteraction]]):
     """
 
 
-class ActionInteractions(dict[type[Entity], list[Interaction]]):
+class ActionInteractions[T: Actor](dict[type[Entity], list[Interaction[T]]]):
     """
     A collection of interactions that occur during the action phase.
 
@@ -52,8 +52,8 @@ class MovementPredicates[T: Actor](dict[type[Entity], NearestPredicates[T]]):
 
 
 class BehaviorBlueprint[T: Actor](Protocol):
-    chore_interactions: ChoreInteractions
-    chore_interactions_not: ChoreInteractionsNot
-    action_interactions: ActionInteractions
+    chore_interactions: ChoreInteractions[T]
+    chore_interactions_not: ChoreInteractionsNot[T]
+    action_interactions: ActionInteractions[T]
     movement_predicates: MovementPredicates[T]
     movement: MovementFunction
