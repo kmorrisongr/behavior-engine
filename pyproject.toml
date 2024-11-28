@@ -1,0 +1,56 @@
+[tool.poetry]
+name = "behavior_engine"
+version = "0.1.0"
+description = ""
+authors = ["Kyle Morrison <56929213+kmorrisongr@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+imageio = "^2.34.1"
+dataclasses-json = "^0.6.7"
+watchfiles = "^0.24.0"
+matplotlib = "^3.9.2"
+numpy = "^2.1.2"
+pygame = "^2.6.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.2"
+
+[tool.poetry.group.hooks.dependencies]
+autoflake = "^2.3.1"
+black = "^24.10.0"
+flake8 = "^7.1.1"
+isort = "^5.13.2"
+mypy = "^1.13.0"
+vulture = "^2.13"
+
+[tool.poetry.group.hook_helpers.dependencies]
+flake8-pyproject = "^1.2.3"
+
+[tool.autoflake]
+remove-all-unused-imports = true
+
+[tool.black]
+line-length = 100
+preview = true
+enable-unstable-feature = ["string_processing"]
+
+[tool.flake8]
+max-line-length = 100
+max-complexity = 10
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+strict = true
+show_error_codes = true
+disallow_any_unimported = true
+disallow_any_expr = true
+disallow_any_explicit = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
