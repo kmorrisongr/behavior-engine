@@ -5,6 +5,7 @@ description = ""
 authors = ["Kyle Morrison <56929213+kmorrisongr@users.noreply.github.com>"]
 license = "MIT"
 readme = "README.md"
+packages = [{include = "behavior_engine", from="src"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
