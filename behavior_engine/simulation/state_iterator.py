@@ -27,7 +27,13 @@ class WorldStateIterator(abc.ABC):
     def get_behavior[T: Actor](self, actor_type: type[T]) -> BehaviorBlueprint[T]:
         return self.blueprints[actor_type]
 
-    def iterate_state(self, state: WorldState) -> None:
+    def step(self, state: WorldState) -> None:
+        """
+        Perform the next step in the simulation.
+
+        Args:
+            state: The current state of the world.
+        """
         actors = [v for subdict in state.itertype(Actor) for v in subdict.values()]
         for actor in actors:
             print(actor)
