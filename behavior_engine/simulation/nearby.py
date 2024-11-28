@@ -1,9 +1,9 @@
 from typing import Callable
 from uuid import UUID
 
-from behavior_engine.model.base.actor import Actor
-from behavior_engine.model.base.behavior import BehaviorBlueprint
-from behavior_engine.model.base.entity import Entity
+from behavior_engine.model.actor import Actor
+from behavior_engine.model.behavior import BehaviorBlueprint
+from behavior_engine.model.entity import Entity
 from behavior_engine.smath.distance import distance, nearby
 from behavior_engine.types import Coordinates, SupportsRichComparison
 

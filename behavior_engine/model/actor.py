@@ -1,7 +1,7 @@
 import abc
 from dataclasses import dataclass
 
-from behavior_engine.model.base.entity import Entity
+from behavior_engine.model.entity import Entity
 from behavior_engine.types import Degrees
 
 

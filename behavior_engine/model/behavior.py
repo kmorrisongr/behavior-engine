@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from typing import Callable, Protocol
 from uuid import UUID
 
-from behavior_engine.model.base.actor import Actor
-from behavior_engine.model.base.entity import Entity
+from behavior_engine.model.actor import Actor
+from behavior_engine.model.entity import Entity
 from behavior_engine.simulation.state import WorldState
 from behavior_engine.types import SupportsRichComparison
 

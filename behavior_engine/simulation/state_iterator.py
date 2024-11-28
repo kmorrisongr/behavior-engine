@@ -1,8 +1,8 @@
 import abc
 from typing import TypeVar
 
-from behavior_engine.model.base.actor import Actor
-from behavior_engine.model.base.behavior import BehaviorBlueprint
+from behavior_engine.model.actor import Actor
+from behavior_engine.model.behavior import BehaviorBlueprint
 from behavior_engine.simulation.actions import perform_actions
 from behavior_engine.simulation.chores import perform_chores
 from behavior_engine.simulation.nearby import (

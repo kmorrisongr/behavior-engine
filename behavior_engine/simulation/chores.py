@@ -1,7 +1,7 @@
 from uuid import UUID
 
-from behavior_engine.model.base.behavior import Interaction, SelfInteraction
-from behavior_engine.model.base.entity import Entity
+from behavior_engine.model.behavior import Interaction, SelfInteraction
+from behavior_engine.model.entity import Entity
 from behavior_engine.simulation.state import WorldState
 
 

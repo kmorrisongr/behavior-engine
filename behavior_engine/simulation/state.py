@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from typing import Iterator
 from uuid import UUID
 
-from behavior_engine.model.base.entity import Entity
+from behavior_engine.model.entity import Entity
 
 
 @dataclass
