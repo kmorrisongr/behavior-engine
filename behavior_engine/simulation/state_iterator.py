@@ -39,7 +39,9 @@ class WorldStateIterator(abc.ABC):
             print(actor)
             actor_behaviors = self.get_behavior(type(actor))
 
-            nearby_entities = get_nearby_entities(actor=actor, entities=state.entities)
+            nearby_entities = get_nearby_entities(
+                position=actor.position, entities=state.entities, within=actor.body_radius
+            )
 
             perform_chores(
                 actor_name=actor.name,

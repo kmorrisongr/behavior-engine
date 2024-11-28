@@ -40,15 +40,26 @@ def find_nearest_entity[
 
 
 def get_nearby_entities(
-    actor: Actor,
+    position: Coordinates,
     entities: dict[type[Entity], dict[UUID, Entity]],
+    within: float,
 ) -> list[Entity]:
+    """
+    Get all entities within a certain distance of a position.
+
+    Args:
+        position: The position to check from.
+        entities: A dictionary of entities, keyed by type.
+        within: How far away from the nearest entity to consider "nearby". Will be added to the
+            body radius of the nearest entity.
+
+    Returns:
+        A list of entities that are nearby, with no more than one for each type.
+    """
     nearby_entities = []
     for subentities in entities.values():
-        nearest = find_nearest_entity(actor.position, list(subentities.values()))
-        if nearest is not None and nearby(
-            actor.position, nearest.position, nearest.body_radius + actor.body_radius
-        ):
+        nearest = find_nearest_entity(position, list(subentities.values()))
+        if nearest is not None and nearby(position, nearest.position, nearest.body_radius + within):
             nearby_entities.append(nearest)
     return nearby_entities
 
