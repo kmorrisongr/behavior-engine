@@ -1,12 +1,11 @@
-import abc
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from behavior_engine.model.entity import Entity
-from behavior_engine.types import Degrees
+from behavior_engine.types import Degrees, Velocity
 
 
 @dataclass
-class Actor(abc.ABC, Entity):
+class Actor(Entity):
     # How wide a view the actor has, centered on its heading
     perception_angle: Degrees = 90.0
     # From edge of actor's body
@@ -18,3 +17,8 @@ class Actor(abc.ABC, Entity):
 
     def __str__(self) -> str:
         return f"{self.full_name}: {self.position}\tgoing {self.velocity}"
+
+
+@dataclass
+class StationaryActor(Actor):
+    velocity: Velocity = field(default_factory=lambda: Velocity(0.0, 0.0))
