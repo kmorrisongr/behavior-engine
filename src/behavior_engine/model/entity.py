@@ -12,6 +12,7 @@ class Entity:
 
     An entity is any object that has some role in the simulation.
     """
+
     position: Coordinates
     velocity: Velocity
     body_radius: float = 3.0
