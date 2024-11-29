@@ -7,6 +7,11 @@ from behavior_engine.types import Coordinates, Velocity
 
 @dataclass
 class Entity:
+    """
+    An entity in the simulation.
+
+    An entity is any object that has some role in the simulation.
+    """
     position: Coordinates
     velocity: Velocity
     body_radius: float = 3.0
