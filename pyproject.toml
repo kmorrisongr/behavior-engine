@@ -9,12 +9,8 @@ packages = [{include = "behavior_engine", from="src"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
-imageio = "^2.34.1"
 dataclasses-json = "^0.6.7"
-watchfiles = "^0.24.0"
-matplotlib = "^3.9.2"
 numpy = "^2.1.2"
-pygame = "^2.6.1"
 structlog = "^24.4.0"
 
 [tool.poetry.group.dev.dependencies]
