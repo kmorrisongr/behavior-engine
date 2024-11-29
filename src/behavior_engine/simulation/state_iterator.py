@@ -1,6 +1,10 @@
+import logging
 from typing import TypeVar
 
+import structlog
+
 from behavior_engine.behavior.blueprint import BehaviorBlueprint
+from behavior_engine.log import QuietType, get_logger
 from behavior_engine.model.actor import Actor
 from behavior_engine.simulation.actions import perform_actions
 from behavior_engine.simulation.chores import perform_chores
@@ -14,7 +18,10 @@ T = TypeVar("T", bound=Actor)
 
 
 class WorldStateIterator:
-    def __init__(self) -> None:
+    def __init__(
+        self, log: logging.Logger | structlog.BoundLogger | None | QuietType = None
+    ) -> None:
+        self.log = get_logger(log)
         # mypy doesn't like this, because T isn't bound inside WorldStateIterator
         # but it communicates (I think) what I want to about the relationship between keys and
         # values in blueprints
@@ -35,7 +42,7 @@ class WorldStateIterator:
         """
         actors = [v for subdict in state.itertype(Actor) for v in subdict.values()]
         for actor in actors:
-            print(actor)
+            self.log.debug(actor)
             actor_behaviors = self.get_behavior(type(actor))
 
             nearby_entities = get_nearby_entities(
