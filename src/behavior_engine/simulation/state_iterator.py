@@ -1,4 +1,3 @@
-import abc
 from typing import TypeVar
 
 from behavior_engine.behavior.blueprint import BehaviorBlueprint
@@ -14,7 +13,7 @@ from behavior_engine.simulation.state import WorldState
 T = TypeVar("T", bound=Actor)
 
 
-class WorldStateIterator(abc.ABC):
+class WorldStateIterator:
     def __init__(self) -> None:
         # mypy doesn't like this, because T isn't bound inside WorldStateIterator
         # but it communicates (I think) what I want to about the relationship between keys and
