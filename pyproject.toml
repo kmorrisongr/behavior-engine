@@ -25,8 +25,8 @@ autoflake = "^2.3.1"
 black = "^24.10.0"
 flake8 = "^7.1.1"
 isort = "^5.13.2"
-mypy = "^1.13.0"
 vulture = "^2.13"
+pyright = "^1.1.389"
 
 [tool.poetry.group.hook_helpers.dependencies]
 flake8-pyproject = "^1.2.3"
@@ -46,12 +46,17 @@ max-complexity = 10
 [tool.isort]
 profile = "black"
 
-[tool.mypy]
-strict = true
-show_error_codes = true
-disallow_any_unimported = true
-disallow_any_expr = true
-disallow_any_explicit = true
+[tool.pyright]
+strict = ["src"]
+reportUnnecessaryTypeIgnoreComment = true
+reportUnnecessaryTypeIgnoreCommentSeverity = "error"
+reportUnknownImport = true
+reportUnknownVariableType = true
+reportUnknownParameterType = true
+reportUnknownArgumentType = true
+reportUnknownLambdaType = true
+reportUnknownMemberType = true
+reportIncompatibleMethodOverride = false
 
 [build-system]
 requires = ["poetry-core"]
