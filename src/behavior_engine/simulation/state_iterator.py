@@ -6,8 +6,7 @@ import structlog
 from behavior_engine.behavior.blueprint import BehaviorBlueprint
 from behavior_engine.log import QuietType, get_logger
 from behavior_engine.model.actor import Actor
-from behavior_engine.simulation.actions import perform_actions
-from behavior_engine.simulation.chores import perform_chores
+from behavior_engine.model.entity import Entity
 from behavior_engine.simulation.nearby import (
     get_nearby_entities,
     get_nearby_perceived_entities,
@@ -43,34 +42,54 @@ class WorldStateIterator:
         actors = [v for subdict in state.itertype(Actor) for v in subdict.values()]
         for actor in actors:
             self.log.debug(actor)
-            actor_behaviors = self.get_behavior(type(actor))
 
             nearby_entities = get_nearby_entities(
                 position=actor.position, entities=state.entities, within=actor.body_radius
             )
 
-            perform_chores(
-                actor_name=actor.name,
-                behaviors=actor_behaviors.chore_interactions,
-                behaviors_not=actor_behaviors.chore_interactions_not,
-                nearby_entities=nearby_entities,
-                state=state,
-            )
-
-            perform_actions(
-                actor_name=actor.name,
-                behaviors=actor_behaviors.action_interactions,
-                nearby_entities=nearby_entities,
-                state=state,
-            )
+            self.perform_chores(actor, nearby_entities, state)
+            self.perform_actions(actor, nearby_entities, state)
 
             nearby_perceived_entities = get_nearby_perceived_entities(
                 actor=actor,
                 entities=state.entities,
                 behavior_blueprints=self.blueprints,
             )
-            actor_behaviors.movement(
-                actor_name=actor.name,
-                nearby_perceived_entities=nearby_perceived_entities,
-                state=state,
-            )
+            self.perform_movement(actor, nearby_perceived_entities, state)
+
+    def perform_chores(
+        self, actor: Actor, nearby_entities: list[Entity], state: WorldState
+    ) -> None:
+        actor_behaviors = self.get_behavior(type(actor))
+
+        known_kinds: set[type[Entity]] = set()
+        for entity in nearby_entities:
+            kind = type(entity)
+            known_kinds.add(kind)
+            if kind not in actor_behaviors.chore_interactions:
+                continue
+            for icallback in actor_behaviors.chore_interactions[kind]:
+                icallback(actor.name, entity.name, state)
+        for kind, interactions in actor_behaviors.chore_interactions_not.items():
+            if kind in known_kinds:
+                continue
+            for sicallback in interactions:
+                sicallback(actor.name, state)
+
+    def perform_actions(
+        self, actor: Actor, nearby_entities: list[Entity], state: WorldState
+    ) -> None:
+        actor_behaviors = self.get_behavior(type(actor))
+
+        for entity in nearby_entities:
+            kind = type(entity)
+            if kind not in actor_behaviors.action_interactions:
+                continue
+            for callback in actor_behaviors.action_interactions[kind]:
+                callback(actor.name, entity.name, state)
+
+    def perform_movement(
+        self, actor: Actor, nearby_perceived_entities: list[Entity], state: WorldState
+    ) -> None:
+        actor_behaviors = self.get_behavior(type(actor))
+        actor_behaviors.movement(actor.name, nearby_perceived_entities, state)
