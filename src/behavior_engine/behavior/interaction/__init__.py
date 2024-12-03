@@ -24,12 +24,12 @@ class SelfInteractionCall(Protocol):
 
 class Interaction[T: Actor](InteractionCall):
     @classmethod
-    def get_actor(cls, actor_cls: type[T], state: WorldState) -> T: ...
+    def get_actor(cls, actor_name: UUID, state: WorldState) -> T: ...
 
 
 class SelfInteraction[T: Actor](SelfInteractionCall):
     @classmethod
-    def get_actor(cls, actor_cls: type[T], state: WorldState) -> T: ...
+    def get_actor(cls, actor_name: UUID, state: WorldState) -> T: ...
 
 
 class InteractionCreator[T: Actor](Protocol):
