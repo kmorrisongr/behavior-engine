@@ -56,7 +56,7 @@ def get_nearby_entities(
     Returns:
         A list of entities that are nearby, with no more than one for each type.
     """
-    nearby_entities = []
+    nearby_entities: list[Entity] = []
     for subentities in entities.values():
         nearest = find_nearest_entity(position, list(subentities.values()))
         if nearest is not None and nearby(position, nearest.position, nearest.body_radius + within):
@@ -71,7 +71,7 @@ def get_nearby_perceived_entities[
     entities: dict[type[Entity], dict[UUID, Entity]],
     behavior_blueprints: dict[type[T], BehaviorBlueprint[T]],
 ) -> list[Entity]:
-    nearby_perceived_entities = []
+    nearby_perceived_entities: list[Entity] = []
     for kind, subentities in entities.items():
         filter_pred = (
             behavior_blueprints[type(actor)].movement_predicates[kind].filter_pred(actor)

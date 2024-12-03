@@ -45,11 +45,11 @@ class Velocity(PolarCoordinates):
 
 
 class SupportsLT(Protocol):
-    def __lt__(self, other: Any) -> bool: ...  # type: ignore[misc]
+    def __lt__(self, other: Any) -> bool: ...
 
 
 class SupportsGT(Protocol):
-    def __gt__(self, other: Any) -> bool: ...  # type: ignore[misc]
+    def __gt__(self, other: Any) -> bool: ...
 
 
 SupportsRichComparison = SupportsLT | SupportsGT

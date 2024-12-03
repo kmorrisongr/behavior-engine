@@ -15,7 +15,7 @@ def perform_chores[
     nearby_entities: list[Entity],
     state: WorldState,
 ) -> None:
-    known_kinds = set()
+    known_kinds: set[type[Entity]] = set()
     for entity in nearby_entities:
         kind = type(entity)
         known_kinds.add(kind)

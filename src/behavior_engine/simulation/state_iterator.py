@@ -31,7 +31,7 @@ class WorldStateIterator:
         self.blueprints[actor_type] = behavior
 
     def get_behavior[T: Actor](self, actor_type: type[T]) -> BehaviorBlueprint[T]:
-        return self.blueprints[actor_type]
+        return self.blueprints[actor_type]  # pyright: ignore[reportReturnType]
 
     def step(self, state: WorldState) -> None:
         """

@@ -26,7 +26,7 @@ def get_logger(
         return get_null_logger()
     elif log is not None:
         return log
-    return structlog.get_logger()  # type: ignore[no-any-return,misc]
+    return structlog.get_logger()
 
 
 def get_null_logger() -> logging.Logger:
